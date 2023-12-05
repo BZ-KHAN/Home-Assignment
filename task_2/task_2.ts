@@ -1,3 +1,4 @@
+import inquirer from 'inquirer'
 console.log('\n*-*-*-*-*-*-*-*-*-*-*-*-*- Task #2 -*-*-*-*-*-*-*-*-*-*-*-*-*')
 console.log('\n-----------------------Scenario #1-----------------------')
 // Creating a simple sum function with return statement

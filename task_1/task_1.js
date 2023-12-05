@@ -1,810 +1,925 @@
 // Import the inquirer module
 import inquirer from 'inquirer';
-console.log('\n*-*-*-*-*-*-*-*-*-*-*-*-*- Task #1 -*-*-*-*-*-*-*-*-*-*-*-*-*');
-console.log('\n*-*-*-*-*-*-*-*-*-*-*- Welcome To Our Supermarket -*-*-*-*-*-*-*-*-*-*-*');
+import chalk from 'chalk';
+console.log(chalk.greenBright('\n*-*-*-*-*-*-*-*-*-*-*-*-*- Task #1 -*-*-*-*-*-*-*-*-*-*-*-*-*'));
+console.log(chalk.greenBright('\n*-*-*-*-*-*-*-*-*-*-*- Welcome To Our Supermarket -*-*-*-*-*-*-*-*-*-*-*'));
 while (true) { // Starting outer-while-loop
-    console.log('\nWe have the following sections of groceries:');
-    console.log("1. \"Fruits\" \n2. \"Vegetables\"");
+    console.log(chalk.magentaBright('\nWe have the following sections of groceries:'));
+    console.log(chalk.blueBright("1. \"Fruits\"") + chalk.greenBright("\n2. \"Vegetables\""));
     let option = await inquirer.prompt([{
             type: 'string',
             name: 'chosenoption',
-            message: 'Enter the number of your choice:'
+            message: chalk.yellowBright('Enter the number of your choice: either 1 or 2?:')
         }]);
-    if (option.chosenoption == 1) { // choose main-sub options like fruits or vegetables
-        console.log('There are following items in your selected fruit category');
-        console.log("1. Apple \tRs.150 per kg \n2. Mango \tRs.250 per kg \n3. Banana \tRs.180 per tozen");
+    while (true) { // Starting while-loop in case of empty input
+        if (option.chosenoption.trim() == '') {
+            console.log(chalk.redBright('Please enter a valid choice')); // Display error for empty input
+            option = await inquirer.prompt([{
+                    type: 'string',
+                    name: 'chosenoption',
+                    message: chalk.yellowBright('Enter the number of your choice: either 1 or 2?:')
+                }]);
+        }
+        else { // Break the loop if the input is not empty 
+            break;
+        }
+    } // Ending while-loop in case of empty input
+    if (option.chosenoption == 1) { // starting choose main-sub options like fruits or vegetables
+        console.log(chalk.greenBright('There are following items in your selected fruit category'));
+        console.log(chalk.blueBright("1. Apple \tRs.150 per kg") + chalk.greenBright("\n2. Mango \tRs.250 per kg") + chalk.magentaBright("\n3. Banana \tRs.180 per dozen"));
         let sub_opt = await inquirer.prompt([{
                 type: 'input',
                 name: 'sub_option',
-                message: 'Enter the number of your selected fruit:'
+                message: chalk.yellowBright('Enter the number of your selected fruit item: either 1 or 2 or 3?:')
             }]);
-        if (sub_opt.sub_option == 1) { // choose sub-options like weight one or two or three kg 
+        while (true) { // Starting while-loop in case of empty input
+            if (sub_opt.sub_option.trim() == '') {
+                console.log(chalk.redBright('Please enter a valid choice')); // Display error for empty input
+                sub_opt = await inquirer.prompt([{
+                        type: 'input',
+                        name: 'sub_option',
+                        message: chalk.yellowBright('Enter the number of your selected fruit item: either 1 or 2 or 3?:')
+                    }]);
+            }
+            else { // Break the loop if the input is not empty 
+                break;
+            }
+        } // Ending while-loop in case of empty input
+        if (sub_opt.sub_option == 1) { // starting choose sub-options like weight one or two or three kg 
             let disc_offer = 'Get 10% discount on purchases above Rs.500';
-            console.log(disc_offer);
+            console.log(chalk.greenBright(disc_offer));
             let tot_weight = await inquirer.prompt([{
                     type: 'input',
                     name: 'weight',
-                    message: 'Enter total weight of Apples you required in kgs:'
+                    message: chalk.yellowBright('Enter total weight of Apples you required in kgs (1kg - 4kg):')
                 }]);
+            while (true) { // Starting while-loop in case of empty input
+                if (tot_weight.weight.trim() == '') {
+                    console.log(chalk.redBright('Please enter a valid choice')); // Display error for empty input
+                    tot_weight = await inquirer.prompt([{
+                            type: 'input',
+                            name: 'weight',
+                            message: chalk.yellowBright('Enter total weight of Apples you required in kgs (1kg - 4kg):')
+                        }]);
+                }
+                else { // Break the loop if the input is not empty 
+                    break;
+                }
+            } // Ending while-loop in case of empty input
             if (tot_weight.weight == 1) { // weight in case of 1 kg 
                 let app_price = 150 * 1;
-                console.log('Your total amount of 1 kg apple is:', ('Rs.' + app_price)); // total amount
+                console.log(chalk.greenBright('Your total amount of 1 kg apple is:', ('Rs.' + app_price))); // total amount
                 if (app_price > 500) {
                     let discount = app_price / 10; // discount price
-                    console.log('You are given a discount of', ('Rs.' + discount));
-                    console.log('So after 10% discount, your actual amount is', ('Rs.' + (app_price - discount)));
+                    console.log(chalk.magentaBright('You are given a discount of', ('Rs.' + discount)));
+                    console.log(chalk.magentaBright('So after 10% discount, your actual amount is', ('Rs.' + (app_price - discount))));
                 }
                 else {
                 }
             }
             else if (tot_weight.weight == 2) { // weight in case of two kg
                 let app_price = 150 * 2;
-                console.log('Your total amount of 2 kg apples are:', ('Rs.' + app_price)); // total amount
+                console.log(chalk.greenBright('Your total amount of 2 kg apples are:', ('Rs.' + app_price))); // total amount
                 if (app_price > 500) {
                     let discount = app_price / 10; // discount price
-                    console.log('You are given a discount of', ('Rs.' + discount));
-                    console.log('So after 10% discount, your actual amount is', ('Rs.' + (app_price - discount)));
+                    console.log(chalk.magentaBright('You are given a discount of', ('Rs.' + discount)));
+                    console.log(chalk.magentaBright('So after 10% discount, your actual amount is', ('Rs.' + (app_price - discount))));
                 }
                 else {
                 }
             }
             else if (tot_weight.weight == 3) { // weight in case of three kg
                 let app_price = 150 * 3;
-                console.log('Your total amount of 3 kg apples are:', ('Rs.' + app_price)); // total amount
+                console.log(chalk.greenBright('Your total amount of 3 kg apples are:', ('Rs.' + app_price))); // total amount
                 if (app_price > 500) {
                     let discount = app_price / 10; // discount price 
-                    console.log('You are given a discount of', ('Rs.' + discount));
-                    console.log('So after 10% discount, your actual amount is', ('Rs.' + (app_price - discount)));
+                    console.log(chalk.magentaBright('You are given a discount of', ('Rs.' + discount)));
+                    console.log(chalk.magentaBright('So after 10% discount, your actual amount is', ('Rs.' + (app_price - discount))));
                 }
                 else {
                 }
             }
             else if (tot_weight.weight == 4) { // weight in case of four kg
                 let app_price = 150 * 4;
-                console.log('Your total amount of 4 kg apples are:', ('Rs.' + app_price)); // total amount 
+                console.log(chalk.greenBright('Your total amount of 4 kg apples are:', ('Rs.' + app_price))); // total amount 
                 if (app_price > 500) {
                     let discount = app_price / 10; // discount price
-                    console.log('You are given a discount of', ('Rs.' + discount));
-                    console.log('So after 10% discount, your actual amount is', ('Rs.' + (app_price - discount)));
+                    console.log(chalk.magentaBright('You are given a discount of', ('Rs.' + discount)));
+                    console.log(chalk.magentaBright('So after 10% discount, your actual amount is', ('Rs.' + (app_price - discount))));
                 }
                 else {
                 }
             }
-            let check_opt = await inquirer.prompt([{
-                    type: 'input',
-                    name: 'checkOut',
-                    message: 'Would you like to proceed checkout:Y/N?'
-                }]);
+            else {
+                console.log(chalk.redBright('Invalid choice'));
+                let permit = await inquirer.prompt([{
+                        type: 'input',
+                        name: 'permitt',
+                        message: chalk.yellowBright('Do you want to contiune shopping:Y/N?')
+                    }]);
+                if (permit.permitt.toLowerCase() == 'y' || permit.permitt.toUpperCase() == 'Y') { // In case of Yes
+                    continue;
+                }
+                else if (permit.permitt.toLowerCase() == 'n' || permit.permitt.toUpperCase() == 'N') { // In case of No
+                    break;
+                }
+            }
             while (true) { // Start inner-while-loop
+                let check_opt = await inquirer.prompt([{
+                        type: 'input',
+                        name: 'checkOut',
+                        message: chalk.yellowBright('Would you like to proceed checkout:Y/N?')
+                    }]);
                 if (check_opt.checkOut.toUpperCase() == 'Y' || check_opt.checkOut.toLowerCase() == 'y') {
-                    console.log('We have following checkout options:');
-                    console.log("1. Credit Card \n2. Debit Card \n3. Net Banking \n4. Cash On Delivery \n5. PayPal \n6. Cancel ");
+                    console.log(chalk.greenBright('We have following checkout options:'));
+                    console.log(chalk.magentaBright("1. Credit Card") + chalk.blackBright("\n2. Debit Card") + chalk.blueBright("\n3. Net Banking") + chalk.greenBright("\n4. Cash On Delivery") + chalk.yellowBright("\n5. PayPal") + chalk.redBright("\n6. Cancel "));
                     let choose_opt = await inquirer.prompt([{
                             type: 'input',
                             name: 'choose_check',
-                            message: 'Please choose a preferred payment method from above and type their number here:'
+                            message: chalk.yellowBright('Please choose a preferred payment method from above and type their number here (1 - 6):')
                         }]);
                     if (choose_opt.choose_check == 1) { // Credit card checkout option
-                        console.log(`You've selected Credit Card as your preferred payment method.`);
-                        console.log(`Please proceed to pay using your Credit Card.`);
-                        console.log('Thanks for proceeding your payments!!');
-                    }
-                    else if (choose_opt.choose_check == 2) { // Debit card checkout option
-                        console.log(`You've selected Debit Card as your preferred payment method.`);
-                        console.log(`Please proceed to pay using your Debit Card.`);
-                        console.log('Thanks for proceeding your payments!!');
-                    }
-                    else if (choose_opt.choose_check == 3) { // Net banking checkout option
-                        console.log(`You've selected Net Banking as your preferred payment method.`);
-                        console.log(`Please proceed to pay using Net Banking.`);
-                        console.log('Thanks for proceeding your payments!!');
-                    }
-                    else if (choose_opt.choose_check == 4) { // Cash on delivery checkout option
-                        console.log(`You've selected Cash On Delivery as your preferred payment method.`);
-                        console.log(`You've selected Cash On Delivery. Payment will be collected upon delivery.`);
-                        console.log('Thanks for proceeding your payments!!');
-                    }
-                    else if (choose_opt.choose_check == 5) { // Paypal checkout option
-                        console.log(`You've selected PayPal as your preferred payment method.`);
-                        console.log(`Please proceed to pay using PayPal.`);
-                        console.log('Thanks for proceeding your payments!!');
-                    }
-                    else if (choose_opt.choose_check == 6) { // Checkout cancel option
-                        console.log('Checkout canceled. Thank you!');
-                    }
-                    else {
-                        console.log('Invalid checkout option.');
+                        console.log(chalk.greenBright(`You've selected Credit Card as your preferred payment method.`));
+                        console.log(chalk.greenBright(`Please proceed to pay using your Credit Card.`));
+                        console.log(chalk.greenBright('Thanks for proceeding your payments!!'));
                         break;
                     }
-                }
-                else if (check_opt.checkOut.toUpperCase() == 'N' || check_opt.checkOut.toLowerCase() == 'n') {
-                    break;
-                }
-                else {
-                    while (true) { // Start sub-inner-while-loop 
-                        let loop_repeat = await inquirer.prompt([{
-                                type: 'input',
-                                name: 'correct_msg',
-                                message: "Enter a valid text either 'Y' or 'N':"
-                            }]);
-                        if (loop_repeat.correct_msg.toUpperCase() == 'Y' || loop_repeat.correct_msg.toLowerCase() == 'y') {
-                            break; // Break sub-inner-while-loop
-                        }
-                        else if (loop_repeat.correct_msg.toUpperCase() == 'N' || loop_repeat.correct_msg.toLowerCase() == 'n') {
-                            break; // // Break sub-inner-while-loop
-                        }
-                        else {
-                            continue;
-                        }
+                    else if (choose_opt.choose_check == 2) { // Debit card checkout option
+                        console.log(chalk.greenBright(`You've selected Debit Card as your preferred payment method.`));
+                        console.log(chalk.greenBright(`Please proceed to pay using your Debit Card.`));
+                        console.log(chalk.greenBright('Thanks for proceeding your payments!!'));
+                        break;
+                    }
+                    else if (choose_opt.choose_check == 3) { // Net banking checkout option
+                        console.log(chalk.greenBright(`You've selected Net Banking as your preferred payment method.`));
+                        console.log(chalk.greenBright(`Please proceed to pay using Net Banking.`));
+                        console.log(chalk.greenBright('Thanks for proceeding your payments!!'));
+                        break;
+                    }
+                    else if (choose_opt.choose_check == 4) { // Cash on delivery checkout option
+                        console.log(chalk.greenBright(`You've selected Cash On Delivery as your preferred payment method.`));
+                        console.log(chalk.greenBright(`You've selected Cash On Delivery. Payment will be collected upon delivery.`));
+                        console.log(chalk.greenBright('Thanks for proceeding your payments!!'));
+                        break;
+                    }
+                    else if (choose_opt.choose_check == 5) { // Paypal checkout option
+                        console.log(chalk.greenBright(`You've selected PayPal as your preferred payment method.`));
+                        console.log(chalk.greenBright(`Please proceed to pay using PayPal.`));
+                        console.log(chalk.greenBright('Thanks for proceeding your payments!!'));
+                        break;
+                    }
+                    else if (choose_opt.choose_check == 6) { // Checkout cancel option
+                        console.log(chalk.redBright('Checkout canceled. Thank you!'));
+                        break;
+                    }
+                    else { // Invalid checkout option
+                        console.log(chalk.redBright('Invalid checkout option.'));
                     }
                 }
-                break; // Break inner-while-loop
-            }
-        }
-        else if (sub_opt.sub_option == 2) { // choose sub-options like weight one or two or three kg 
+                else if (check_opt.checkOut.toUpperCase() == 'N' || check_opt.checkOut.toLowerCase() == 'n') { // In case of No
+                    break;
+                }
+                else { // In case of else neither Yes nor No
+                    console.log(chalk.redBright("Enter a valid text either 'Y' or 'N':"));
+                }
+            } // close inner while loop 
+        } // Ending choose sub-options like weight one or two or three kg 
+        else if (sub_opt.sub_option == 2) { // starting choose sub-options like weight one or two or three kg 
             let disc_0_offer = 'Get 10% discount on purchases above Rs.600';
-            console.log(disc_0_offer);
+            console.log(chalk.greenBright(disc_0_offer));
             let tot_weight = await inquirer.prompt([{
                     type: 'input',
                     name: 'weight',
-                    message: 'Enter total weight of Mangos you required in kgs:'
+                    message: chalk.yellowBright('Enter total weight of Mangos you required in kgs (1kg - 4kg):')
                 }]);
+            while (true) { // Starting while-loop in case of empty input
+                if (tot_weight.weight.trim() == '') {
+                    console.log(chalk.redBright('Please enter a valid choice')); // Display error for empty input
+                    tot_weight = await inquirer.prompt([{
+                            type: 'input',
+                            name: 'weight',
+                            message: chalk.yellowBright('Enter total weight of Mangos you required in kgs:(1kg - 4kg)')
+                        }]);
+                }
+                else { // Break the loop if the input is not empty 
+                    break;
+                }
+            } // Ending while-loop in case of empty input  
             if (tot_weight.weight == 1) { // weight in case of 1 kg 
                 let mango_price = 250 * 1;
-                console.log('Your total amount of 1 kg mango is:', ('Rs.' + mango_price)); // total amount
+                console.log(chalk.greenBright('Your total amount of 1 kg mango is:', ('Rs.' + mango_price))); // total amount
                 if (mango_price > 600) {
                     let discount = mango_price / 10; // discount price
-                    console.log('You are given a discount of', ('Rs.' + discount));
-                    console.log('So after 10% discount, your actual amount is', ('Rs.' + (mango_price - discount)));
+                    console.log(chalk.magentaBright('You are given a discount of', ('Rs.' + discount)));
+                    console.log(chalk.magentaBright('So after 10% discount, your actual amount is', ('Rs.' + (mango_price - discount))));
                 }
                 else {
                 }
             }
             else if (tot_weight.weight == 2) { // weight in case of 2 kg 
                 let mango_price = 250 * 2;
-                console.log('Your total amount of 2 kg mango is:', ('Rs.' + mango_price)); // total amount
+                console.log(chalk.greenBright('Your total amount of 2 kg mango is:', ('Rs.' + mango_price))); // total amount
                 if (mango_price > 600) {
                     let discount = mango_price / 10; // discount price
-                    console.log('You are given a discount of', ('Rs.' + discount));
-                    console.log('So after 10% discount, your actual amount is', ('Rs.' + (mango_price - discount)));
+                    console.log(chalk.magentaBright('You are given a discount of', ('Rs.' + discount)));
+                    console.log(chalk.magentaBright('So after 10% discount, your actual amount is', ('Rs.' + (mango_price - discount))));
                 }
                 else {
                 }
             }
             else if (tot_weight.weight == 3) { // weight in case of 3 kg 
                 let mango_price = 250 * 3;
-                console.log('Your total amount of 3 kg mango is:', ('Rs.' + mango_price)); // total amount
+                console.log(chalk.greenBright('Your total amount of 3 kg mango is:', ('Rs.' + mango_price))); // total amount
                 if (mango_price > 600) {
                     let discount = mango_price / 10; // discount price
-                    console.log('You are given a discount of', ('Rs.' + discount));
-                    console.log('So after 10% discount, your actual amount is', ('Rs.' + (mango_price - discount)));
+                    console.log(chalk.magentaBright('You are given a discount of', ('Rs.' + discount)));
+                    console.log(chalk.magentaBright('So after 10% discount, your actual amount is', ('Rs.' + (mango_price - discount))));
                 }
                 else {
                 }
             }
             else if (tot_weight.weight == 4) { // weight in case of 3 kg 
                 let mango_price = 200 * 4;
-                console.log('Your total amount of 4 kg mango is:', ('Rs.' + mango_price)); // total amount
+                console.log(chalk.greenBright('Your total amount of 4 kg mango is:', ('Rs.' + mango_price))); // total amount
                 if (mango_price > 600) {
                     let discount = mango_price / 10; // discount price
-                    console.log('You are given a discount of', ('Rs.' + discount));
-                    console.log('So after 10% discount, your actual amount is', ('Rs.' + (mango_price - discount)));
+                    console.log(chalk.magentaBright('You are given a discount of', ('Rs.' + discount)));
+                    console.log(chalk.magentaBright('So after 10% discount, your actual amount is', ('Rs.' + (mango_price - discount))));
                 }
                 else {
                 }
             }
-            let check_opt = await inquirer.prompt([{
-                    type: 'input',
-                    name: 'checkOut',
-                    message: 'Would you like to proceed checkout:Y/N?'
-                }]);
             while (true) { // Start inner-while-loop
-                if (check_opt.checkOut.toUpperCase() == 'Y' || check_opt.checkOut.toLowerCase() == 'y') {
-                    console.log('We have following checkout options:');
-                    console.log("1. Credit Card \n2. Debit Card \n3. Net Banking \n4. Cash On Delivery \n5. PayPal \n6. Cancel ");
+                let check_opt = await inquirer.prompt([{
+                        type: 'input',
+                        name: 'checkOut',
+                        message: chalk.yellowBright('Would you like to proceed checkout:Y/N?')
+                    }]);
+                if (check_opt.checkOut.toUpperCase() == 'Y' || check_opt.checkOut.toLowerCase() == 'y') { // In case of checkout Yes
+                    console.log(chalk.greenBright('We have following checkout options:'));
+                    console.log(chalk.magentaBright("1. Credit Card") + chalk.blackBright("\n2. Debit Card") + chalk.blueBright("\n3. Net Banking") + chalk.greenBright("\n4. Cash On Delivery") + chalk.yellowBright("\n5. PayPal") + chalk.redBright("\n6. Cancel "));
                     let choose_opt = await inquirer.prompt([{
                             type: 'input',
                             name: 'choose_check',
-                            message: 'Please choose a preferred payment method from above and type their number here:'
+                            message: chalk.yellowBright('Please choose a preferred payment method from above and type their number here (1 - 6):')
                         }]);
                     if (choose_opt.choose_check == 1) { // Credit card checkout option
-                        console.log(`You've selected Credit Card as your preferred payment method.`);
-                        console.log(`Please proceed to pay using your Credit Card.`);
-                        console.log('Thanks for proceeding your payments!!');
-                    }
-                    else if (choose_opt.choose_check == 2) { // Debit card checkout option
-                        console.log(`You've selected Debit Card as your preferred payment method.`);
-                        console.log(`Please proceed to pay using your Debit Card.`);
-                        console.log('Thanks for proceeding your payments!!');
-                    }
-                    else if (choose_opt.choose_check == 3) { // Net banking checkout option
-                        console.log(`You've selected Net Banking as your preferred payment method.`);
-                        console.log(`Please proceed to pay using Net Banking.`);
-                        console.log('Thanks for proceeding your payments!!');
-                    }
-                    else if (choose_opt.choose_check == 4) { // Cash on delivery checkout option
-                        console.log(`You've selected Cash On Delivery as your preferred payment method.`);
-                        console.log(`You've selected Cash On Delivery. Payment will be collected upon delivery.`);
-                        console.log('Thanks for proceeding your payments!!');
-                    }
-                    else if (choose_opt.choose_check == 5) { // Paypal checkout option
-                        console.log(`You've selected PayPal as your preferred payment method.`);
-                        console.log(`Please proceed to pay using PayPal.`);
-                        console.log('Thanks for proceeding your payments!!');
-                    }
-                    else if (choose_opt.choose_check == 6) { // Checkout cancel option
-                        console.log('Checkout canceled. Thank you!');
-                    }
-                    else {
-                        console.log('Invalid checkout option.');
+                        console.log(chalk.greenBright(`You've selected Credit Card as your preferred payment method.`));
+                        console.log(chalk.greenBright(`Please proceed to pay using your Credit Card.`));
+                        console.log(chalk.greenBright('Thanks for proceeding your payments!!'));
                         break;
                     }
-                }
-                else if (check_opt.checkOut.toUpperCase() == 'N' || check_opt.checkOut.toLowerCase() == 'n') {
-                    break;
-                }
-                else {
-                    while (true) { // Start sub-inner-while-loop 
-                        let loop_repeat = await inquirer.prompt([{
-                                type: 'input',
-                                name: 'correct_msg',
-                                message: "Enter a valid text either 'Y' or 'N':"
-                            }]);
-                        if (loop_repeat.correct_msg.toUpperCase() == 'Y' || loop_repeat.correct_msg.toLowerCase() == 'y') {
-                            break; // Break sub-inner-while-loop
-                        }
-                        else if (loop_repeat.correct_msg.toUpperCase() == 'N' || loop_repeat.correct_msg.toLowerCase() == 'n') {
-                            break; // // Break sub-inner-while-loop
-                        }
-                        else {
-                            continue;
-                        }
+                    else if (choose_opt.choose_check == 2) { // Debit card checkout option
+                        console.log(chalk.greenBright(`You've selected Debit Card as your preferred payment method.`));
+                        console.log(chalk.greenBright(`Please proceed to pay using your Debit Card.`));
+                        console.log(chalk.greenBright('Thanks for proceeding your payments!!'));
+                        break;
+                    }
+                    else if (choose_opt.choose_check == 3) { // Net banking checkout option
+                        console.log(chalk.greenBright(`You've selected Net Banking as your preferred payment method.`));
+                        console.log(chalk.greenBright(`Please proceed to pay using Net Banking.`));
+                        console.log(chalk.greenBright('Thanks for proceeding your payments!!'));
+                        break;
+                    }
+                    else if (choose_opt.choose_check == 4) { // Cash on delivery checkout option
+                        console.log(chalk.greenBright(`You've selected Cash On Delivery as your preferred payment method.`));
+                        console.log(chalk.greenBright(`You've selected Cash On Delivery. Payment will be collected upon delivery.`));
+                        console.log(chalk.greenBright('Thanks for proceeding your payments!!'));
+                        break;
+                    }
+                    else if (choose_opt.choose_check == 5) { // Paypal checkout option
+                        console.log(chalk.greenBright(`You've selected PayPal as your preferred payment method.`));
+                        console.log(chalk.greenBright(`Please proceed to pay using PayPal.`));
+                        console.log(chalk.greenBright('Thanks for proceeding your payments!!'));
+                        break;
+                    }
+                    else if (choose_opt.choose_check == 6) { // Checkout cancel option
+                        console.log(chalk.redBright('Checkout canceled. Thank you!'));
+                        break;
+                    }
+                    else { // Invalid checkout option
+                        console.log(chalk.redBright('Invalid checkout option.'));
                     }
                 }
-                break; // Break inner-while-loop
-            }
-        }
-        else if (sub_opt.sub_option == 3) { // choose sub-options like weight one or two or three kg 
+                else if (check_opt.checkOut.toUpperCase() == 'N' || check_opt.checkOut.toLowerCase() == 'n') { // In case of checkout No
+                    break;
+                }
+                else { // In case of else neither Yes nor No
+                    console.log(chalk.redBright("Enter a valid text either 'Y' or 'N':"));
+                }
+            } // End inner-while-loop
+        } // Ending choose sub-options like weight one or two or three kg 
+        else if (sub_opt.sub_option == 3) { // starting choose sub-options like weight one or two or three kg 
             let disc_1_offer = 'Get 10% discount on purchases above Rs.650';
-            console.log(disc_1_offer);
+            console.log(chalk.greenBright(disc_1_offer));
             let tot_weight = await inquirer.prompt([{
                     type: 'input',
                     name: 'weight',
-                    message: 'Enter how many dozen of Banana you require:'
+                    message: chalk.yellowBright('Enter how many dozen of Banana you require (1doz - 4doz):')
                 }]);
+            while (true) { // Starting while-loop in case of empty input
+                if (tot_weight.weight.trim() == '') {
+                    console.log(chalk.redBright('Please enter a valid choice')); // Display error for empty input
+                    tot_weight = await inquirer.prompt([{
+                            type: 'input',
+                            name: 'weight',
+                            message: chalk.yellowBright('Enter how many dozen of Banana you require (1doz - 4doz):')
+                        }]);
+                }
+                else { // Break the loop if the input is not empty 
+                    break;
+                }
+            } // Ending while-loop in case of empty input
             if (tot_weight.weight == 1) { // weight in case of 1 kg 
                 let banana_price = 180 * 1;
-                console.log('Your total amount of 1 dozen banana is:', ('Rs.' + banana_price)); // total amount
+                console.log(chalk.greenBright('Your total amount of 1 dozen banana is:', ('Rs.' + banana_price))); // total amount
                 if (banana_price > 650) {
                     let discount = banana_price / 10; // discount price
-                    console.log('You are given a discount of', ('Rs.' + discount));
-                    console.log('So after 10% discount, your actual amount is', ('Rs.' + (banana_price - discount)));
+                    console.log(chalk.magentaBright('You are given a discount of', ('Rs.' + discount)));
+                    console.log(chalk.magentaBright('So after 10% discount, your actual amount is', ('Rs.' + (banana_price - discount))));
                 }
                 else {
                 }
             }
             else if (tot_weight.weight == 2) { // weight in case of 2 kg 
                 let banana_price = 180 * 2;
-                console.log('Your total amount of 2 dozen banana is:', ('Rs.' + banana_price)); // total amount
+                console.log(chalk.greenBright('Your total amount of 2 dozen banana is:', ('Rs.' + banana_price))); // total amount
                 if (banana_price > 600) {
                     let discount = banana_price / 10; // discount price
-                    console.log('You are given a discount of', ('Rs.' + discount));
-                    console.log('So after 10% discount, your actual amount is', ('Rs.' + (banana_price - discount)));
+                    console.log(chalk.magentaBright('You are given a discount of', ('Rs.' + discount)));
+                    console.log(chalk.magentaBright('So after 10% discount, your actual amount is', ('Rs.' + (banana_price - discount))));
                 }
                 else {
                 }
             }
             else if (tot_weight.weight == 3) { // weight in case of 3 kg 
                 let banana_price = 180 * 3;
-                console.log('Your total amount of 3 dozen banana is:', ('Rs.' + banana_price)); // total amount
+                console.log(chalk.greenBright('Your total amount of 3 dozen banana is:', ('Rs.' + banana_price))); // total amount
                 if (banana_price > 600) {
                     let discount = banana_price / 10; // discount price
-                    console.log('You are given a discount of', ('Rs.' + discount));
-                    console.log('So after 10% discount, your actual amount is', ('Rs.' + (banana_price - discount)));
+                    console.log(chalk.magentaBright('You are given a discount of', ('Rs.' + discount)));
+                    console.log(chalk.magentaBright('So after 10% discount, your actual amount is', ('Rs.' + (banana_price - discount))));
                 }
                 else {
                 }
             }
             else if (tot_weight.weight == 4) { // weight in case of 3 kg 
                 let banana_price = 180 * 4;
-                console.log('Your total amount of 4 dozen banana is:', ('Rs.' + banana_price)); // total amount
+                console.log(chalk.greenBright('Your total amount of 4 dozen banana is:', ('Rs.' + banana_price))); // total amount
                 if (banana_price > 600) {
                     let discount = banana_price / 10; // discount price
-                    console.log('You are given a discount of', ('Rs.' + discount));
-                    console.log('So after 10% discount, your actual amount is', ('Rs.' + (banana_price - discount)));
+                    console.log(chalk.magentaBright('You are given a discount of', ('Rs.' + discount)));
+                    console.log(chalk.magentaBright('So after 10% discount, your actual amount is', ('Rs.' + (banana_price - discount))));
                 }
                 else {
+                }
+            }
+            else {
+                console.log(chalk.redBright('Invalid choice'));
+                let permit = await inquirer.prompt([{
+                        type: 'input',
+                        name: 'permitt',
+                        message: chalk.yellowBright('Do you want to contiune shopping:Y/N?')
+                    }]);
+                if (permit.permitt.toLowerCase() == 'y' || permit.permitt.toUpperCase() == 'Y') { // In case of Yes
+                    continue;
+                }
+                else if (permit.permitt.toLowerCase() == 'n' || permit.permitt.toUpperCase() == 'N') { // In case of No
+                    break;
                 }
             }
             let check_opt = await inquirer.prompt([{
                     type: 'input',
                     name: 'checkOut',
-                    message: 'Would you like to proceed checkout:Y/N?'
+                    message: chalk.yellowBright('Would you like to proceed checkout:Y/N?')
                 }]);
             while (true) { // Start inner-while-loop
                 if (check_opt.checkOut.toUpperCase() == 'Y' || check_opt.checkOut.toLowerCase() == 'y') {
-                    console.log('We have following checkout options:');
-                    console.log("1. Credit Card \n2. Debit Card \n3. Net Banking \n4. Cash On Delivery \n5. PayPal \n6. Cancel ");
+                    console.log(chalk.greenBright('We have following checkout options:'));
+                    console.log(chalk.magentaBright("1. Credit Card") + chalk.blackBright("\n2. Debit Card") + chalk.blueBright("\n3. Net Banking") + chalk.greenBright("\n4. Cash On Delivery") + chalk.yellowBright("\n5. PayPal") + chalk.redBright("\n6. Cancel "));
                     let choose_opt = await inquirer.prompt([{
                             type: 'input',
                             name: 'choose_check',
-                            message: 'Please choose a preferred payment method from above and type their number here:'
+                            message: chalk.yellowBright('Please choose a preferred payment method from above and type their number here (1 - 6):')
                         }]);
                     if (choose_opt.choose_check == 1) { // Credit card checkout option
-                        console.log(`You've selected Credit Card as your preferred payment method.`);
-                        console.log(`Please proceed to pay using your Credit Card.`);
-                        console.log('Thanks for proceeding your payments!!');
-                    }
-                    else if (choose_opt.choose_check == 2) { // Debit card checkout option
-                        console.log(`You've selected Debit Card as your preferred payment method.`);
-                        console.log(`Please proceed to pay using your Debit Card.`);
-                        console.log('Thanks for proceeding your payments!!');
-                    }
-                    else if (choose_opt.choose_check == 3) { // Net banking checkout option
-                        console.log(`You've selected Net Banking as your preferred payment method.`);
-                        console.log(`Please proceed to pay using Net Banking.`);
-                        console.log('Thanks for proceeding your payments!!');
-                    }
-                    else if (choose_opt.choose_check == 4) { // Cash on delivery checkout option
-                        console.log(`You've selected Cash On Delivery as your preferred payment method.`);
-                        console.log(`You've selected Cash On Delivery. Payment will be collected upon delivery.`);
-                        console.log('Thanks for proceeding your payments!!');
-                    }
-                    else if (choose_opt.choose_check == 5) { // Paypal checkout option
-                        console.log(`You've selected PayPal as your preferred payment method.`);
-                        console.log(`Please proceed to pay using PayPal.`);
-                        console.log('Thanks for proceeding your payments!!');
-                    }
-                    else if (choose_opt.choose_check == 6) { // Checkout cancel option
-                        console.log('Checkout canceled. Thank you!');
-                    }
-                    else {
-                        console.log('Invalid checkout option.');
+                        console.log(chalk.greenBright(`You've selected Credit Card as your preferred payment method.`));
+                        console.log(chalk.greenBright(`Please proceed to pay using your Credit Card.`));
+                        console.log(chalk.greenBright('Thanks for proceeding your payments!!'));
                         break;
                     }
-                }
-                else if (check_opt.checkOut.toUpperCase() == 'N' || check_opt.checkOut.toLowerCase() == 'n') {
-                    break;
-                }
-                else {
-                    while (true) { // Start sub-inner-while-loop 
-                        let loop_repeat = await inquirer.prompt([{
-                                type: 'input',
-                                name: 'correct_msg',
-                                message: "Enter a valid text either 'Y' or 'N':"
-                            }]);
-                        if (loop_repeat.correct_msg.toUpperCase() == 'Y' || loop_repeat.correct_msg.toLowerCase() == 'y') {
-                            break; // Break sub-inner-while-loop
-                        }
-                        else if (loop_repeat.correct_msg.toUpperCase() == 'N' || loop_repeat.correct_msg.toLowerCase() == 'n') {
-                            break; // // Break sub-inner-while-loop
-                        }
-                        else {
-                            continue;
-                        }
+                    else if (choose_opt.choose_check == 2) { // Debit card checkout option
+                        console.log(chalk.greenBright(`You've selected Debit Card as your preferred payment method.`));
+                        console.log(chalk.greenBright(`Please proceed to pay using your Debit Card.`));
+                        console.log(chalk.greenBright('Thanks for proceeding your payments!!'));
+                        break;
+                    }
+                    else if (choose_opt.choose_check == 3) { // Net banking checkout option
+                        console.log(chalk.greenBright(`You've selected Net Banking as your preferred payment method.`));
+                        console.log(chalk.greenBright(`Please proceed to pay using Net Banking.`));
+                        console.log(chalk.greenBright('Thanks for proceeding your payments!!'));
+                        break;
+                    }
+                    else if (choose_opt.choose_check == 4) { // Cash on delivery checkout option
+                        console.log(chalk.greenBright(`You've selected Cash On Delivery as your preferred payment method.`));
+                        console.log(chalk.greenBright(`You've selected Cash On Delivery. Payment will be collected upon delivery.`));
+                        console.log(chalk.greenBright('Thanks for proceeding your payments!!'));
+                        break;
+                    }
+                    else if (choose_opt.choose_check == 5) { // Paypal checkout option
+                        console.log(chalk.greenBright(`You've selected PayPal as your preferred payment method.`));
+                        console.log(chalk.greenBright(`Please proceed to pay using PayPal.`));
+                        console.log(chalk.greenBright('Thanks for proceeding your payments!!'));
+                        break;
+                    }
+                    else if (choose_opt.choose_check == 6) { // Checkout cancel option
+                        console.log(chalk.redBright('Checkout canceled. Thank you!'));
+                        break;
+                    }
+                    else { // Invalid checkout option
+                        console.log(chalk.redBright('Invalid checkout option.'));
                     }
                 }
-                break; // Break inner-while-loop
-            }
-        }
-        else {
-            console.log('Invalid Entry');
-        }
-    }
-    else if (option.chosenoption == 2) { // choose main-sub options like apple or banana or mangos
-        console.log('There are following items in your selected vegetable category');
-        console.log("1. Carrot \tRs.100 per kg \n2. Lady-finger \tRs.150 per kg \n3. Potato \tRs.180 per kg");
+                else if (check_opt.checkOut.toUpperCase() == 'N' || check_opt.checkOut.toLowerCase() == 'n') { // In case of checkout No
+                    break;
+                }
+                else { // In case of else neither Yes nor No
+                    console.log(chalk.redBright("Enter a valid text either 'Y' or 'N':"));
+                }
+            } // End inner-while-loop   
+        } // closing choose sub-options like weight one or two or three kg 
+        else { // strating choose invalid sub-options
+            console.log(chalk.redBright('Invalid Entry'));
+        } // closing choose invalid sub-options
+    } // closing choose main-sub options like fruits or vegetables
+    else if (option.chosenoption == 2) { // starting choose main-sub options like apple or banana or mangos
+        console.log(chalk.greenBright('There are following items in your selected vegetable category'));
+        console.log(chalk.magentaBright("1. Carrot \tRs.100 per kg") + chalk.yellowBright("\n2. Lady-finger \tRs.150 per kg") + chalk.blueBright("\n3. Potato \tRs.180 per kg"));
         let sub_opt = await inquirer.prompt([{
                 type: 'input',
                 name: 'sub_option',
-                message: 'Enter the number of your selected vegetable:'
+                message: chalk.yellowBright('Enter the number of your selected vegetable (1 - 3):')
             }]);
-        if (sub_opt.sub_option == 1) { // choose sub-options like weight one or two or three kg 
+        while (true) { // Starting while-loop in case of empty input
+            if (sub_opt.sub_option.trim() == '') {
+                console.log(chalk.redBright('Please enter a valid choice')); // Display error for empty input
+                sub_opt = await inquirer.prompt([{
+                        type: 'input',
+                        name: 'sub_option',
+                        message: chalk.yellowBright('Enter the number of your selected vegetable (1 - 3):')
+                    }]);
+            }
+            else { // Break the loop if the input is not empty 
+                break;
+            }
+        } // Ending while-loop in case of empty input
+        if (sub_opt.sub_option == 1) { // Starting choose sub-options like weight one or two or three kg 
             let disc_2_offer = 'Get 10% discount on purchases above Rs.300';
-            console.log(disc_2_offer);
+            console.log(chalk.greenBright(disc_2_offer));
             let tot_weight = await inquirer.prompt([{
                     type: 'input',
                     name: 'weight',
-                    message: 'Enter total weight of Carrot you required in kgs:'
+                    message: chalk.yellowBright('Enter total weight of Carrot you required in kgs (1kg - 4kg):')
                 }]);
+            while (true) { // Starting while-loop in case of empty input
+                if (tot_weight.weight.trim() == '') {
+                    console.log(chalk.redBright('Please enter a valid choice')); // Display error for empty input
+                    tot_weight = await inquirer.prompt([{
+                            type: 'input',
+                            name: 'weight',
+                            message: chalk.yellowBright('Enter total weight of Carrot you required in kgs (1kg - 4kg):')
+                        }]);
+                }
+                else { // Break the loop if the input is not empty 
+                    break;
+                }
+            } // Ending while-loop in case of empty input
             if (tot_weight.weight == 1) { // weight in case of 1 kg 
                 let carr_price = 100 * 1;
-                console.log('Your total amount of 1 kg carrot is:', ('Rs.' + carr_price)); // total amount
+                console.log(chalk.greenBright('Your total amount of 1 kg carrot is:', ('Rs.' + carr_price))); // total amount
                 if (carr_price > 300) {
                     let discount = carr_price / 10; // discount price
-                    console.log('You are given a discount of', ('Rs.' + discount));
-                    console.log('So after 10% discount, your actual amount is', ('Rs.' + (carr_price - discount)));
+                    console.log(chalk.magentaBright('You are given a discount of', ('Rs.' + discount)));
+                    console.log(chalk.magentaBright('So after 10% discount, your actual amount is', ('Rs.' + (carr_price - discount))));
                 }
                 else {
                 }
             }
             else if (tot_weight.weight == 2) { // weight in case of two kg
                 let carr_price = 100 * 2;
-                console.log('Your total amount of 2 kg carrot is:', ('Rs.' + carr_price)); // total amount
+                console.log(chalk.greenBright('Your total amount of 2 kg carrot is:', ('Rs.' + carr_price))); // total amount
                 if (carr_price > 300) {
                     let discount = carr_price / 10; // discount price
-                    console.log('You are given a discount of', ('Rs.' + discount));
-                    console.log('So after 10% discount, your actual amount is', ('Rs.' + (carr_price - discount)));
+                    console.log(chalk.magentaBright('You are given a discount of', ('Rs.' + discount)));
+                    console.log(chalk.magentaBright('So after 10% discount, your actual amount is', ('Rs.' + (carr_price - discount))));
                 }
                 else {
                 }
             }
             else if (tot_weight.weight == 3) { // weight in case of three kg
                 let carr_price = 100 * 3;
-                console.log('Your total amount of 3 kg carrot is:', ('Rs.' + carr_price)); // total amount
+                console.log(chalk.greenBright('Your total amount of 3 kg carrot is:', ('Rs.' + carr_price))); // total amount
                 if (carr_price > 300) {
                     let discount = carr_price / 10; // discount price 
-                    console.log('You are given a discount of', ('Rs.' + discount));
-                    console.log('So after 10% discount, your actual amount is', ('Rs.' + (carr_price - discount)));
+                    console.log(chalk.magentaBright('You are given a discount of', ('Rs.' + discount)));
+                    console.log(chalk.magentaBright('So after 10% discount, your actual amount is', ('Rs.' + (carr_price - discount))));
                 }
                 else {
                 }
             }
             else if (tot_weight.weight == 4) { // weight in case of four kg
                 let carr_price = 100 * 4;
-                console.log('Your total amount of 4 kg carrot is:', ('Rs.' + carr_price)); // total amount 
+                console.log(chalk.greenBright('Your total amount of 4 kg carrot is:', ('Rs.' + carr_price))); // total amount 
                 if (carr_price > 300) {
                     let discount = carr_price / 10; // discount price
-                    console.log('You are given a discount of', ('Rs.' + discount));
-                    console.log('So after 10% discount, your actual amount is', ('Rs.' + (carr_price - discount)));
+                    console.log(chalk.magentaBright('You are given a discount of', ('Rs.' + discount)));
+                    console.log(chalk.magentaBright('So after 10% discount, your actual amount is', ('Rs.' + (carr_price - discount))));
                 }
                 else {
                 }
             }
-            let check_opt = await inquirer.prompt([{
-                    type: 'input',
-                    name: 'checkOut',
-                    message: 'Would you like to proceed checkout:Y/N?'
-                }]);
+            else {
+                console.log(chalk.redBright('Invalid choice'));
+                let permit = await inquirer.prompt([{
+                        type: 'input',
+                        name: 'permitt',
+                        message: chalk.yellowBright('Do you want to contiune shopping:Y/N?')
+                    }]);
+                if (permit.permitt.toLowerCase() == 'y' || permit.permitt.toUpperCase() == 'Y') { // In case of Yes
+                    continue;
+                }
+                else if (permit.permitt.toLowerCase() == 'n' || permit.permitt.toUpperCase() == 'N') { // In case of No
+                    break;
+                }
+            }
             while (true) { // Start inner-while-loop
+                let check_opt = await inquirer.prompt([{
+                        type: 'input',
+                        name: 'checkOut',
+                        message: chalk.yellowBright('Would you like to proceed checkout:Y/N?')
+                    }]);
                 if (check_opt.checkOut.toUpperCase() == 'Y' || check_opt.checkOut.toLowerCase() == 'y') {
-                    console.log('We have following checkout options:');
-                    console.log("1. Credit Card \n2. Debit Card \n3. Net Banking \n4. Cash On Delivery \n5. PayPal \n6. Cancel ");
+                    console.log(chalk.greenBright('We have following checkout options:'));
+                    console.log(chalk.magentaBright("1. Credit Card") + chalk.blackBright("\n2. Debit Card") + chalk.blueBright("\n3. Net Banking") + chalk.greenBright("\n4. Cash On Delivery") + chalk.yellowBright("\n5. PayPal") + chalk.redBright("\n6. Cancel "));
                     let choose_opt = await inquirer.prompt([{
                             type: 'input',
                             name: 'choose_check',
-                            message: 'Please choose a preferred payment method from above and type their number here:'
+                            message: chalk.yellowBright('Please choose a preferred payment method from above and type their number here (1 - 6):')
                         }]);
                     if (choose_opt.choose_check == 1) { // Credit card checkout option
-                        console.log(`You've selected Credit Card as your preferred payment method.`);
-                        console.log(`Please proceed to pay using your Credit Card.`);
-                        console.log('Thanks for proceeding your payments!!');
-                    }
-                    else if (choose_opt.choose_check == 2) { // Debit card checkout option
-                        console.log(`You've selected Debit Card as your preferred payment method.`);
-                        console.log(`Please proceed to pay using your Debit Card.`);
-                        console.log('Thanks for proceeding your payments!!');
-                    }
-                    else if (choose_opt.choose_check == 3) { // Net banking checkout option
-                        console.log(`You've selected Net Banking as your preferred payment method.`);
-                        console.log(`Please proceed to pay using Net Banking.`);
-                        console.log('Thanks for proceeding your payments!!');
-                    }
-                    else if (choose_opt.choose_check == 4) { // Cash on delivery checkout option
-                        console.log(`You've selected Cash On Delivery as your preferred payment method.`);
-                        console.log(`You've selected Cash On Delivery. Payment will be collected upon delivery.`);
-                        console.log('Thanks for proceeding your payments!!');
-                    }
-                    else if (choose_opt.choose_check == 5) { // Paypal checkout option
-                        console.log(`You've selected PayPal as your preferred payment method.`);
-                        console.log(`Please proceed to pay using PayPal.`);
-                        console.log('Thanks for proceeding your payments!!');
-                    }
-                    else if (choose_opt.choose_check == 6) { // Checkout cancel option
-                        console.log('Checkout canceled. Thank you!');
-                    }
-                    else {
-                        console.log('Invalid checkout option.');
+                        console.log(chalk.greenBright(`You've selected Credit Card as your preferred payment method.`));
+                        console.log(chalk.greenBright(`Please proceed to pay using your Credit Card.`));
+                        console.log(chalk.greenBright('Thanks for proceeding your payments!!'));
                         break;
                     }
-                }
-                else if (check_opt.checkOut.toUpperCase() == 'N' || check_opt.checkOut.toLowerCase() == 'n') {
-                    break;
-                }
-                else {
-                    while (true) { // Start sub-inner-while-loop 
-                        let loop_repeat = await inquirer.prompt([{
-                                type: 'input',
-                                name: 'correct_msg',
-                                message: "Enter a valid text either 'Y' or 'N':"
-                            }]);
-                        if (loop_repeat.correct_msg.toUpperCase() == 'Y' || loop_repeat.correct_msg.toLowerCase() == 'y') {
-                            break; // Break sub-inner-while-loop
-                        }
-                        else if (loop_repeat.correct_msg.toUpperCase() == 'N' || loop_repeat.correct_msg.toLowerCase() == 'n') {
-                            break; // // Break sub-inner-while-loop
-                        }
-                        else {
-                            continue;
-                        }
+                    else if (choose_opt.choose_check == 2) { // Debit card checkout option
+                        console.log(chalk.greenBright(`You've selected Debit Card as your preferred payment method.`));
+                        console.log(chalk.greenBright(`Please proceed to pay using your Debit Card.`));
+                        console.log(chalk.greenBright('Thanks for proceeding your payments!!'));
+                        break;
+                    }
+                    else if (choose_opt.choose_check == 3) { // Net banking checkout option
+                        console.log(chalk.greenBright(`You've selected Net Banking as your preferred payment method.`));
+                        console.log(chalk.greenBright(`Please proceed to pay using Net Banking.`));
+                        console.log(chalk.greenBright('Thanks for proceeding your payments!!'));
+                        break;
+                    }
+                    else if (choose_opt.choose_check == 4) { // Cash on delivery checkout option
+                        console.log(chalk.greenBright(`You've selected Cash On Delivery as your preferred payment method.`));
+                        console.log(chalk.greenBright(`You've selected Cash On Delivery. Payment will be collected upon delivery.`));
+                        console.log(chalk.greenBright('Thanks for proceeding your payments!!'));
+                        break;
+                    }
+                    else if (choose_opt.choose_check == 5) { // Paypal checkout option
+                        console.log(chalk.greenBright(`You've selected PayPal as your preferred payment method.`));
+                        console.log(chalk.greenBright(`Please proceed to pay using PayPal.`));
+                        console.log(chalk.greenBright('Thanks for proceeding your payments!!'));
+                        break;
+                    }
+                    else if (choose_opt.choose_check == 6) { // Checkout cancel option
+                        console.log(chalk.redBright('Checkout canceled. Thank you!'));
+                        break;
+                    }
+                    else {
+                        console.log(chalk.redBright('Invalid checkout option.')); // invalid checkout option
                     }
                 }
-                break; // Break inner-while-loop
-            }
-        }
-        else if (sub_opt.sub_option == 2) { // choose sub-options like weight one or two or three kg 
+                else if (check_opt.checkOut.toUpperCase() == 'N' || check_opt.checkOut.toLowerCase() == 'n') { // In case of checkout No
+                    break;
+                }
+                else { // In case of else neither Yes nor No
+                    console.log(chalk.redBright("Enter a valid text either 'Y' or 'N':"));
+                }
+            } // Close inner-while-loop
+        } // Closing choose sub-options like weight one or two or three kg
+        else if (sub_opt.sub_option == 2) { // Start choose sub-options like weight one or two or three kg 
             let disc_3_offer = 'Get 10% discount on purchases above Rs.450';
-            console.log(disc_3_offer);
+            console.log(chalk.greenBright(disc_3_offer));
             let tot_weight = await inquirer.prompt([{
                     type: 'input',
                     name: 'weight',
-                    message: 'Enter total weight of Lady-finger you required in kgs:'
+                    message: chalk.yellow('Enter total weight of Lady-finger you required in kgs (1kg - 4kg):')
                 }]);
+            while (true) { // Starting while-loop in case of empty input
+                if (tot_weight.weight.trim() == '') {
+                    console.log(chalk.redBright('Please enter a valid choice')); // Display error for empty input
+                    tot_weight = await inquirer.prompt([{
+                            type: 'input',
+                            name: 'weight',
+                            message: chalk.yellowBright('Enter total weight of Lady-finger you required in kgs (1kg - 4kg):')
+                        }]);
+                }
+                else { // Break the loop if the input is not empty 
+                    break;
+                }
+            } // Ending while-loop in case of empty input
             if (tot_weight.weight == 1) { // weight in case of 1 kg 
                 let ladf_price = 150 * 1;
-                console.log('Your total amount of 1 kg lady-finger is:', ('Rs.' + ladf_price)); // total amount
+                console.log(chalk.greenBright('Your total amount of 1 kg lady-finger is:', ('Rs.' + ladf_price))); // total amount
                 if (ladf_price > 450) {
                     let discount = ladf_price / 10; // discount price
-                    console.log('You are given a discount of', ('Rs.' + discount));
-                    console.log('So after 10% discount, your actual amount is', ('Rs.' + (ladf_price - discount)));
+                    console.log(chalk.magentaBright('You are given a discount of', ('Rs.' + discount)));
+                    console.log(chalk.magentaBright('So after 10% discount, your actual amount is', ('Rs.' + (ladf_price - discount))));
                 }
                 else {
                 }
             }
             else if (tot_weight.weight == 2) { // weight in case of two kg
                 let ladf_price = 150 * 2;
-                console.log('Your total amount of 2 kg lady-finger is:', ('Rs.' + ladf_price)); // total amount
+                console.log(chalk.greenBright('Your total amount of 2 kg lady-finger is:', ('Rs.' + ladf_price))); // total amount
                 if (ladf_price > 450) {
                     let discount = ladf_price / 10; // discount price
-                    console.log('You are given a discount of', ('Rs.' + discount));
-                    console.log('So after 10% discount, your actual amount is', ('Rs.' + (ladf_price - discount)));
+                    console.log(chalk.magentaBright('You are given a discount of', ('Rs.' + discount)));
+                    console.log(chalk.magentaBright('So after 10% discount, your actual amount is', ('Rs.' + (ladf_price - discount))));
                 }
                 else {
                 }
             }
             else if (tot_weight.weight == 3) { // weight in case of three kg
                 let ladf_price = 150 * 3;
-                console.log('Your total amount of 3 kg lady-finger is:', ('Rs.' + ladf_price)); // total amount
+                console.log(chalk.greenBright('Your total amount of 3 kg lady-finger is:', ('Rs.' + ladf_price))); // total amount
                 if (ladf_price > 450) {
                     let discount = ladf_price / 10; // discount price 
-                    console.log('You are given a discount of', ('Rs.' + discount));
-                    console.log('So after discount, your actual amount is', ('Rs.' + (ladf_price - discount)));
+                    console.log(chalk.magentaBright('You are given a discount of', ('Rs.' + discount)));
+                    console.log(chalk.magentaBright('So after discount, your actual amount is', ('Rs.' + (ladf_price - discount))));
                 }
                 else {
                 }
             }
             else if (tot_weight.weight == 4) { // weight in case of four kg
                 let ladf_price = 150 * 4;
-                console.log('Your total amount of 4 kg lady-finger is:', ('Rs.' + ladf_price)); // total amount 
+                console.log(chalk.greenBright('Your total amount of 4 kg lady-finger is:', ('Rs.' + ladf_price))); // total amount 
                 if (ladf_price > 450) {
                     let discount = ladf_price / 10; // discount price
-                    console.log('You are given a discount of', ('Rs.' + discount));
-                    console.log('So after 10% discount, your actual amount is', ('Rs.' + (ladf_price - discount)));
+                    console.log(chalk.magentaBright('You are given a discount of', ('Rs.' + discount)));
+                    console.log(chalk.magentaBright('So after 10% discount, your actual amount is', ('Rs.' + (ladf_price - discount))));
                 }
                 else {
                 }
             }
-            let check_opt = await inquirer.prompt([{
-                    type: 'input',
-                    name: 'checkOut',
-                    message: 'Would you like to proceed checkout:Y/N?'
-                }]);
+            else {
+                console.log(chalk.redBright('Invalid choice'));
+                let permit = await inquirer.prompt([{
+                        type: 'input',
+                        name: 'permitt',
+                        message: chalk.yellowBright('Do you want to contiune shopping:Y/N?')
+                    }]);
+                if (permit.permitt.toLowerCase() == 'y' || permit.permitt.toUpperCase() == 'Y') { // In case of Yes
+                    continue;
+                }
+                else if (permit.permitt.toLowerCase() == 'n' || permit.permitt.toUpperCase() == 'N') { // In case of No
+                    break;
+                }
+            }
             while (true) { // Start inner-while-loop
+                let check_opt = await inquirer.prompt([{
+                        type: 'input',
+                        name: 'checkOut',
+                        message: chalk.yellowBright('Would you like to proceed checkout:Y/N?')
+                    }]);
                 if (check_opt.checkOut.toUpperCase() == 'Y' || check_opt.checkOut.toLowerCase() == 'y') {
-                    console.log('We have following checkout options:');
-                    console.log("1. Credit Card \n2. Debit Card \n3. Net Banking \n4. Cash On Delivery \n5. PayPal \n6. Cancel ");
+                    console.log(chalk.greenBright('We have following checkout options:'));
+                    console.log(chalk.magentaBright("1. Credit Card") + chalk.blackBright("\n2. Debit Card") + chalk.blueBright("\n3. Net Banking") + chalk.greenBright("\n4. Cash On Delivery") + chalk.yellowBright("\n5. PayPal") + chalk.redBright("\n6. Cancel "));
                     let choose_opt = await inquirer.prompt([{
                             type: 'input',
                             name: 'choose_check',
-                            message: 'Please choose a preferred payment method from above and type their number here:'
+                            message: chalk.yellowBright('Please choose a preferred payment method from above and type their number here (1 - 6):')
                         }]);
                     if (choose_opt.choose_check == 1) { // Credit card checkout option
-                        console.log(`You've selected Credit Card as your preferred payment method.`);
-                        console.log(`Please proceed to pay using your Credit Card.`);
-                        console.log('Thanks for proceeding your payments!!');
-                    }
-                    else if (choose_opt.choose_check == 2) { // Debit card checkout option
-                        console.log(`You've selected Debit Card as your preferred payment method.`);
-                        console.log(`Please proceed to pay using your Debit Card.`);
-                        console.log('Thanks for proceeding your payments!!');
-                    }
-                    else if (choose_opt.choose_check == 3) { // Net banking checkout option
-                        console.log(`You've selected Net Banking as your preferred payment method.`);
-                        console.log(`Please proceed to pay using Net Banking.`);
-                        console.log('Thanks for proceeding your payments!!');
-                    }
-                    else if (choose_opt.choose_check == 4) { // Cash on delivery checkout option
-                        console.log(`You've selected Cash On Delivery as your preferred payment method.`);
-                        console.log(`You've selected Cash On Delivery. Payment will be collected upon delivery.`);
-                        console.log('Thanks for proceeding your payments!!');
-                    }
-                    else if (choose_opt.choose_check == 5) { // Paypal checkout option
-                        console.log(`You've selected PayPal as your preferred payment method.`);
-                        console.log(`Please proceed to pay using PayPal.`);
-                        console.log('Thanks for proceeding your payments!!');
-                    }
-                    else if (choose_opt.choose_check == 6) { // Checkout cancel option
-                        console.log('Checkout canceled. Thank you!');
-                    }
-                    else {
-                        console.log('Invalid checkout option.');
+                        console.log(chalk.greenBright(`You've selected Credit Card as your preferred payment method.`));
+                        console.log(chalk.greenBright(`Please proceed to pay using your Credit Card.`));
+                        console.log(chalk.greenBright('Thanks for proceeding your payments!!'));
                         break;
                     }
-                }
-                else if (check_opt.checkOut.toUpperCase() == 'N' || check_opt.checkOut.toLowerCase() == 'n') {
-                    break;
-                }
-                else {
-                    while (true) { // Start sub-inner-while-loop 
-                        let loop_repeat = await inquirer.prompt([{
-                                type: 'input',
-                                name: 'correct_msg',
-                                message: "Enter a valid text either 'Y' or 'N':"
-                            }]);
-                        if (loop_repeat.correct_msg.toUpperCase() == 'Y' || loop_repeat.correct_msg.toLowerCase() == 'y') {
-                            break; // Break sub-inner-while-loop
-                        }
-                        else if (loop_repeat.correct_msg.toUpperCase() == 'N' || loop_repeat.correct_msg.toLowerCase() == 'n') {
-                            break; // // Break sub-inner-while-loop
-                        }
-                        else {
-                            continue;
-                        }
+                    else if (choose_opt.choose_check == 2) { // Debit card checkout option
+                        console.log(chalk.greenBright(`You've selected Debit Card as your preferred payment method.`));
+                        console.log(chalk.greenBright(`Please proceed to pay using your Debit Card.`));
+                        console.log(chalk.greenBright('Thanks for proceeding your payments!!'));
+                        break;
+                    }
+                    else if (choose_opt.choose_check == 3) { // Net banking checkout option
+                        console.log(chalk.greenBright(`You've selected Net Banking as your preferred payment method.`));
+                        console.log(chalk.greenBright(`Please proceed to pay using Net Banking.`));
+                        console.log(chalk.greenBright('Thanks for proceeding your payments!!'));
+                        break;
+                    }
+                    else if (choose_opt.choose_check == 4) { // Cash on delivery checkout option
+                        console.log(chalk.greenBright(`You've selected Cash On Delivery as your preferred payment method.`));
+                        console.log(chalk.greenBright(`You've selected Cash On Delivery. Payment will be collected upon delivery.`));
+                        console.log(chalk.greenBright('Thanks for proceeding your payments!!'));
+                        break;
+                    }
+                    else if (choose_opt.choose_check == 5) { // Paypal checkout option
+                        console.log(chalk.greenBright(`You've selected PayPal as your preferred payment method.`));
+                        console.log(chalk.greenBright(`Please proceed to pay using PayPal.`));
+                        console.log(chalk.greenBright('Thanks for proceeding your payments!!'));
+                        break;
+                    }
+                    else if (choose_opt.choose_check == 6) { // Checkout cancel option
+                        console.log(chalk.redBright('Checkout canceled. Thank you!'));
+                        break;
+                    }
+                    else {
+                        console.log(chalk.redBright('Invalid checkout option.')); // Invalid checkout opetion
                     }
                 }
-                break; // Break inner-while-loop
-            }
-        }
-        else if (sub_opt.sub_option == 3) { // choose sub-options like weight one or two or three kg 
+                else if (check_opt.checkOut.toUpperCase() == 'N' || check_opt.checkOut.toLowerCase() == 'n') { // In case of checkout No
+                    break;
+                }
+                else { // In case of else neither Yes nor No
+                    console.log(chalk.redBright("Enter a valid text either 'Y' or 'N':"));
+                }
+            } // Close inner-while-loop
+        } // Close choose sub-options like weight one or two or three kg 
+        else if (sub_opt.sub_option == 3) { // Start choose sub-options like weight one or two or three kg 
             let disc_4_offer = 'Get 10% discount on purchases above Rs.500';
-            console.log(disc_4_offer);
+            console.log(chalk.greenBright(disc_4_offer));
             let tot_weight = await inquirer.prompt([{
                     type: 'input',
                     name: 'weight',
-                    message: 'Enter total weight of Potato you required in kgs:'
+                    message: chalk.yellowBright('Enter total weight of Potato you required in kgs (1kg - 4kg):')
                 }]);
+            while (true) { // Starting while-loop in case of empty input
+                if (tot_weight.weight.trim() == '') {
+                    console.log(chalk.redBright('Please enter a valid choice')); // Display error for empty input
+                    tot_weight = await inquirer.prompt([{
+                            type: 'input',
+                            name: 'weight',
+                            message: chalk.yellowBright('Enter total weight of Potato you required in kgs (1kg - 4kg):')
+                        }]);
+                }
+                else { // Break the loop if the input is not empty 
+                    break;
+                }
+            } // Ending while-loop in case of empty input
             if (tot_weight.weight == 1) { // weight in case of 1 kg 
                 let pot_price = 180 * 1;
-                console.log('Your total amount of 1 kg potato is:', ('Rs.' + pot_price)); // total amount
+                console.log(chalk.greenBright('Your total amount of 1 kg potato is:', ('Rs.' + pot_price))); // total amount
                 if (pot_price > 500) {
                     let discount = pot_price / 10; // discount price
-                    console.log('You are given a discount of', ('Rs.' + discount));
-                    console.log('So after 10% discount, your actual amount is', ('Rs.' + (pot_price - discount)));
+                    console.log(chalk.magentaBright('You are given a discount of', ('Rs.' + discount)));
+                    console.log(chalk.magentaBright('So after 10% discount, your actual amount is', ('Rs.' + (pot_price - discount))));
                 }
                 else {
                 }
             }
             else if (tot_weight.weight == 2) { // weight in case of two kg
                 let pot_price = 180 * 2;
-                console.log('Your total amount of 2 kg potato is:', ('Rs.' + pot_price)); // total amount
+                console.log(chalk.greenBright('Your total amount of 2 kg potato is:', ('Rs.' + pot_price))); // total amount
                 if (pot_price > 500) {
                     let discount = pot_price / 10; // discount price
-                    console.log('You are given a discount of', ('Rs.' + discount));
-                    console.log('So after 10% discount, your actual amount is', ('Rs.' + (pot_price - discount)));
+                    console.log(chalk.magentaBright('You are given a discount of', ('Rs.' + discount)));
+                    console.log(chalk.magentaBright('So after 10% discount, your actual amount is', ('Rs.' + (pot_price - discount))));
                 }
                 else {
                 }
             }
             else if (tot_weight.weight == 3) { // weight in case of three kg
                 let pot_price = 180 * 3;
-                console.log('Your total amount of 3 kg potato is:', ('Rs.' + pot_price)); // total amount
+                console.log(chalk.greenBright('Your total amount of 3 kg potato is:', ('Rs.' + pot_price))); // total amount
                 if (pot_price > 500) {
                     let discount = pot_price / 10; // discount price 
-                    console.log('You are given a discount of', ('Rs.' + discount));
-                    console.log('So after 10% discount, your actual amount is', ('Rs.' + (pot_price - discount)));
+                    console.log(chalk.magentaBright('You are given a discount of', ('Rs.' + discount)));
+                    console.log(chalk.magentaBright('So after 10% discount, your actual amount is', ('Rs.' + (pot_price - discount))));
                 }
                 else {
                 }
             }
             else if (tot_weight.weight == 4) { // weight in case of four kg
                 let pot_price = 180 * 4;
-                console.log('Your total amount of 4 kg potato is:', ('Rs.' + pot_price)); // total amount 
+                console.log(chalk.greenBright('Your total amount of 4 kg potato is:', ('Rs.' + pot_price))); // total amount 
                 if (pot_price > 500) {
                     let discount = pot_price / 10; // discount price
-                    console.log('You are given a discount of', ('Rs.' + discount));
-                    console.log('So after 10% discount, your actual amount is', ('Rs.' + (pot_price - discount)));
+                    console.log(chalk.magentaBright('You are given a discount of', ('Rs.' + discount)));
+                    console.log(chalk.magentaBright('So after 10% discount, your actual amount is', ('Rs.' + (pot_price - discount))));
                 }
                 else {
+                }
+            }
+            else {
+                console.log(chalk.redBright('Invalid choice'));
+                let permit = await inquirer.prompt([{
+                        type: 'input',
+                        name: 'permitt',
+                        message: chalk.yellow('Do you want to contiune shopping:Y/N?')
+                    }]);
+                if (permit.permitt.toLowerCase() == 'y' || permit.permitt.toUpperCase() == 'Y') { // In case of Yes
+                    continue;
+                }
+                else if (permit.permitt.toLowerCase() == 'n' || permit.permitt.toUpperCase() == 'N') { // In case of No
+                    break;
                 }
             }
             let check_opt = await inquirer.prompt([{
                     type: 'input',
                     name: 'checkOut',
-                    message: 'Would you like to proceed checkout:Y/N?'
+                    message: chalk.yellowBright('Would you like to proceed checkout:Y/N?')
                 }]);
             while (true) { // Start inner-while-loop
                 if (check_opt.checkOut.toUpperCase() == 'Y' || check_opt.checkOut.toLowerCase() == 'y') {
-                    console.log('We have following checkout options:');
-                    console.log("1. Credit Card \n2. Debit Card \n3. Net Banking \n4. Cash On Delivery \n5. PayPal \n6. Cancel ");
+                    console.log(chalk.greenBright('We have following checkout options:'));
+                    console.log(chalk.magentaBright("1. Credit Card") + chalk.blackBright("\n2. Debit Card") + chalk.blueBright("\n3. Net Banking") + chalk.greenBright("\n4. Cash On Delivery") + chalk.yellowBright("\n5. PayPal") + chalk.redBright("\n6. Cancel "));
                     let choose_opt = await inquirer.prompt([{
                             type: 'input',
                             name: 'choose_check',
-                            message: 'Please choose a preferred payment method from above and type their number here:'
+                            message: chalk.yellowBright('Please choose a preferred payment method from above and type their number here (1 - 6):')
                         }]);
                     if (choose_opt.choose_check == 1) { // Credit card checkout option
-                        console.log(`You've selected Credit Card as your preferred payment method.`);
-                        console.log(`Please proceed to pay using your Credit Card.`);
-                        console.log('Thanks for proceeding your payments!!');
-                    }
-                    else if (choose_opt.choose_check == 2) { // Debit card checkout option
-                        console.log(`You've selected Debit Card as your preferred payment method.`);
-                        console.log(`Please proceed to pay using your Debit Card.`);
-                        console.log('Thanks for proceeding your payments!!');
-                    }
-                    else if (choose_opt.choose_check == 3) { // Net banking checkout option
-                        console.log(`You've selected Net Banking as your preferred payment method.`);
-                        console.log(`Please proceed to pay using Net Banking.`);
-                        console.log('Thanks for proceeding your payments!!');
-                    }
-                    else if (choose_opt.choose_check == 4) { // Cash on delivery checkout option
-                        console.log(`You've selected Cash On Delivery as your preferred payment method.`);
-                        console.log(`You've selected Cash On Delivery. Payment will be collected upon delivery.`);
-                        console.log('Thanks for proceeding your payments!!');
-                    }
-                    else if (choose_opt.choose_check == 5) { // Paypal checkout option
-                        console.log(`You've selected PayPal as your preferred payment method.`);
-                        console.log(`Please proceed to pay using PayPal.`);
-                        console.log('Thanks for proceeding your payments!!');
-                    }
-                    else if (choose_opt.choose_check == 6) { // Checkout cancel option
-                        console.log('Checkout canceled. Thank you!');
-                    }
-                    else {
-                        console.log('Invalid checkout option.');
+                        console.log(chalk.greenBright(`You've selected Credit Card as your preferred payment method.`));
+                        console.log(chalk.greenBright(`Please proceed to pay using your Credit Card.`));
+                        console.log(chalk.greenBright('Thanks for proceeding your payments!!'));
                         break;
                     }
-                }
-                else if (check_opt.checkOut.toUpperCase() == 'N' || check_opt.checkOut.toLowerCase() == 'n') {
-                    break;
-                }
-                else {
-                    while (true) { // Start sub-inner-while-loop 
-                        let loop_repeat = await inquirer.prompt([{
-                                type: 'input',
-                                name: 'correct_msg',
-                                message: "Enter a valid text either 'Y' or 'N':"
-                            }]);
-                        if (loop_repeat.correct_msg.toUpperCase() == 'Y' || loop_repeat.correct_msg.toLowerCase() == 'y') {
-                            break; // Break sub-inner-while-loop
-                        }
-                        else if (loop_repeat.correct_msg.toUpperCase() == 'N' || loop_repeat.correct_msg.toLowerCase() == 'n') {
-                            break; // // Break sub-inner-while-loop
-                        }
-                        else {
-                            continue;
-                        }
+                    else if (choose_opt.choose_check == 2) { // Debit card checkout option
+                        console.log(chalk.greenBright(`You've selected Debit Card as your preferred payment method.`));
+                        console.log(chalk.greenBright(`Please proceed to pay using your Debit Card.`));
+                        console.log(chalk.greenBright('Thanks for proceeding your payments!!'));
+                        break;
+                    }
+                    else if (choose_opt.choose_check == 3) { // Net banking checkout option
+                        console.log(chalk.greenBright(`You've selected Net Banking as your preferred payment method.`));
+                        console.log(chalk.greenBright(`Please proceed to pay using Net Banking.`));
+                        console.log(chalk.greenBright('Thanks for proceeding your payments!!'));
+                        break;
+                    }
+                    else if (choose_opt.choose_check == 4) { // Cash on delivery checkout option
+                        console.log(chalk.greenBright(`You've selected Cash On Delivery as your preferred payment method.`));
+                        console.log(chalk.greenBright(`You've selected Cash On Delivery. Payment will be collected upon delivery.`));
+                        console.log(chalk.greenBright('Thanks for proceeding your payments!!'));
+                        break;
+                    }
+                    else if (choose_opt.choose_check == 5) { // Paypal checkout option
+                        console.log(chalk.greenBright(`You've selected PayPal as your preferred payment method.`));
+                        console.log(chalk.greenBright(`Please proceed to pay using PayPal.`));
+                        console.log(chalk.greenBright('Thanks for proceeding your payments!!'));
+                        break;
+                    }
+                    else if (choose_opt.choose_check == 6) { // Checkout cancel option
+                        console.log(chalk.redBright('Checkout canceled. Thank you!'));
+                        break;
+                    }
+                    else {
+                        console.log(chalk.redBright('Invalid checkout option.')); // Invalid checkout option
                     }
                 }
-                break; // Break inner-while-loop
-            }
+                else if (check_opt.checkOut.toUpperCase() == 'N' || check_opt.checkOut.toLowerCase() == 'n') { // In case of checkout No
+                    break;
+                }
+                else { // In case of else neither Yes nor No
+                    console.log(chalk.redBright("Enter a valid text either 'Y' or 'N':"));
+                }
+            } // Close inner-while-loop
+        } // Close choose sub-options like weight one or two or three kg 
+        else { // Start Invalid entry
+            console.log(chalk.redBright('Invalid Entry'));
+        } // close invalid entry
+    } // closing choose main-sub options like apple or banana or mangos
+    else { // starting choose invalid entry
+        console.log(chalk.redBright('Invalid Entry'));
+    } // starting choose invalid entry
+    let inner_flag = false; // Inner flag approach
+    while (true) { // Start while loop for continue shopping
+        let permit = await inquirer.prompt([{
+                type: 'input',
+                name: 'permitt',
+                message: chalk.yellowBright('Do you want to contiune shopping:Y/N?')
+            }]);
+        if (permit.permitt.toLowerCase() == 'y' || permit.permitt.toUpperCase() == 'Y') { // In case of Yes
+            break;
+        }
+        else if (permit.permitt.toLowerCase() == 'n' || permit.permitt.toUpperCase() == 'N') { // In case of No
+            inner_flag = true;
+            break;
         }
         else {
-            console.log('Invalid Entry');
+            console.log(chalk.redBright("Please enter a valid text either 'Y' or 'N':")); // Invalid text entered
         }
-    }
-    else {
-        console.log('Invalid Entry');
-    }
-    let permit = await inquirer.prompt([{
-            type: 'input',
-            name: 'permitt',
-            message: 'Do you want to contiune shopping:Y/N?'
-        }]);
-    if (permit.permitt.toLowerCase() == 'y' || permit.permitt.toUpperCase() == 'Y') {
-        continue;
-    }
-    else if (permit.permitt.toLowerCase() == 'n' || permit.permitt.toUpperCase() == 'N') {
+    } //Close while loop for continue shopping
+    if (inner_flag) { // Apply inner-flag option
         break;
     }
     else {
-        while (true) { // Sub-while-loop in case of invlid text entry
-            let play = await inquirer.prompt([{
-                    type: 'input',
-                    name: 'msg',
-                    message: "Please enter a valid text either 'Y' or 'N':"
-                }]);
-            console.log(play.msg);
-            if (play.msg.toUpperCase() == 'Y' || play.msg.toLowerCase() == 'y') {
-                break;
-            }
-            else if (play.msg.toUpperCase() == 'N' || play.msg.toLowerCase() == 'n') {
-                break;
-            }
-            else {
-            }
-        } // Closing inner-while-loop
     }
-    break; // Break Outer-while-loop
-} // Ending Outer-while-loop
+} // Ending Outer-while-loop//
 let endMessage = '+++++++++++++++ Thanks For Shopping Here! +++++++++++++++\n';
-console.log(endMessage);
+console.log(chalk.greenBright(endMessage));
